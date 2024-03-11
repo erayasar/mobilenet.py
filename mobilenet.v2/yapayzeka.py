@@ -2,15 +2,9 @@ import numpy as np
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from keras.utils import plot_model
-import os
-
 # Örnek veri oluşturma
 # X verisi: Görüntülerin piksel değerleri
 # y verisi: Etiketler (0: normal, 1: çıplak)
-nudity_dir ="./data/nudity"
-nomral_dir ="./data/normal"
-nudity_files = os.listdir(nudity_dir)
-normal_files =os.listdir(nomral_dir)
 num_samples = 100
 image_shape = (64, 64, 3)  # 64x64 boyutunda renkli görüntüler
 X = np.random.rand(num_samples, *image_shape)  # 100 adet görüntü oluştur
