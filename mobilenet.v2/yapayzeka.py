@@ -1,8 +1,14 @@
 import os
+import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import tensorflow as tf
+from keras.models import Sequential
+from keras.layers import Conv2D, MaxPooling2D
+from keras.layers import Activation, Dropout,Dense
+np.random.seed(42)
+epochs = 5
 
 path= './data/'
 test_path= './data/test/'
@@ -41,12 +47,6 @@ X_test = extract_features(
 )
 y_test = np.array([1] * len(Nudity) + [0] * len(Normal)) 
 
-from keras.models import Sequential
-from keras.layers import Conv2D, MaxPooling2D
-from keras.layers import Activation, Dropout,Dense
-np.random.seed(42)
-epochs = 10
-
 def train():
     model = tf.keras.models.Sequential([
         tf.keras.layers.Flatten(),
@@ -75,3 +75,13 @@ plt.plot(range(1,epochs+1), history.history['val_loss'], label='Test Loss')
 plt.legend()
 plt.show()
 
+X_test = extract_features(
+    list(map(lambda x: './data/test/4463998783.jpg' , Test))
+)
+y_pred = model.predict(X_test)
+if y_pred.all() > 0.5:
+    print("Bu fotograf çıplaklık içermektedir.")
+    print("Tahmin değeri:", y_pred)
+else:
+    print("Bu fotograf güvenlidir.")
+    print("Tahmin değeri:", y_pred)
